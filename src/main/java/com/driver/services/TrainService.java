@@ -26,7 +26,14 @@ public class TrainService {
         //and route String logic to be taken from the Problem statement.
         //Save the train and return the trainId that is generated from the database.
         //Avoid using the lombok library
-        return null;
+
+        Train train = new Train();
+        train.setBookedTickets(new ArrayList<>());
+        train.setRoute(String.valueOf(trainEntryDto.getStationRoute().get(0)));
+        train.setDepartureTime(trainEntryDto.getDepartureTime());
+        train.setNoOfSeats(trainEntryDto.getNoOfSeats());
+        Train savedTrain = trainRepository.save(train);
+        return savedTrain.getTrainId();
     }
 
     public Integer calculateAvailableSeats(SeatAvailabilityEntryDto seatAvailabilityEntryDto){
@@ -49,8 +56,7 @@ public class TrainService {
         //if the trainId is not passing through that station
         //throw new Exception("Train is not passing from this station");
         //  in a happy case we need to find out the number of such people.
-
-
+        Train train = trainRepository.findById(trainId).get();
         return 0;
     }
 
